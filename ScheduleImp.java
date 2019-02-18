@@ -120,7 +120,9 @@ public class ScheduleImp implements MeetingSchedule {
 
     /* Schedules the day(s) of the week for meetings */
     public void scheduleMeetingDay(int dayOfWeek) {
-        this.daysOfMeeting.add(dayOfWeek);
+        if (!this.daysOfMeeting.contains(dayOfWeek)) {
+            this.daysOfMeeting.add(dayOfWeek);
+        }
         System.out.println("**********************************************");
         System.out.print("Scheduled Meeting Day(s):");
         for (int i : this.daysOfMeeting) {
