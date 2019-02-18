@@ -23,5 +23,9 @@ class ScheduleMain {
         schedule.scheduleMeetingDay(3);
         schedule.removeMeetingDay(1);
         // meetings = schedule.getMeetingDates();
+
+        ScheduleImp schedule2 = new ScheduleImp();
+        schedule2.scheduleMeetingDay(3);
+        schedule2.getMeetingDates();
     }
 }
