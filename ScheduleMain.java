@@ -18,11 +18,11 @@ class ScheduleMain {
         schedule.addHoliday(2019, 1, 2);
         schedule.addHoliday(2019, 6, 26);
         schedule.printHolidays();
-        ArrayList<Date>  arr = schedule.getMeetingDates();
+        ArrayList<Date> meetings = schedule.getMeetingDates();
         schedule.removeHoliday(2019,1,2);
-        arr = schedule.getMeetingDates();
-        schedule.removeMeetingDay(4);
         schedule.scheduleMeetingDay(3);
-        arr = schedule.getMeetingDates();
+        schedule.removeMeetingDay(4);
+        meetings = schedule.getMeetingDates();
+
     }
 }

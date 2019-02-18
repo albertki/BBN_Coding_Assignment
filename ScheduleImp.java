@@ -6,35 +6,48 @@ https://stackoverflow.com/questions/1152846/java-calendar-set-not-giving-correct
 https://stackoverflow.com/questions/9397203/last-day-of-month-calculation
 https://stackoverflow.com/questions/18333099/how-to-find-which-day-of-the-week-it-is-java
 https://stackoverflow.com/questions/6538791/what-is-the-difference-between-calendar-week-of-month-and-calendar-day-of-week-i
+https://www.journaldev.com/17899/java-simpledateformat-java-date-format
 */
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
 public class ScheduleImp implements MeetingSchedule {
     ArrayList<Integer> daysOfMeeting = new ArrayList<>();
     ArrayList<Calendar> holidays = new ArrayList<>();
     ArrayList<Date> meetings = new ArrayList<>();
+    int year;
+    int month;
+    int day;
+    public ScheduleImp() {
 
+    }
+    /* Non-default Constructor */
+    public ScheduleImp(int yy, int mm, int dd) {
+        this.year = yy;
+        this.month = mm;
+        this.day = dd;
+    }
     /* Schedules holiday on given date (mm/dd) */
-    public void addHoliday(int year, int month, int date) {
+    public void addHoliday(int yy, int mm, int dd) {
         Calendar holidayCal = Calendar.getInstance();
-        holidayCal.set(year, month-1, date);
+        holidayCal.set(yy, mm-1, dd);
         holidays.add(holidayCal);
         System.out.println("**********************************************");
-        System.out.println("Holiday set for: " + month + "/" + date);
+        System.out.println("Holiday set for: " + mm + "/" + dd);
     }
     /* Removes scheduled holiday */
-    public void removeHoliday(int year, int month, int date) {
+    public void removeHoliday(int year, int mm, int dd) {
         for (int i = 0; i < holidays.size(); i++) {
-            if((holidays.get(i).get(Calendar.MONTH)+1 == month) &&
-                (holidays.get(i).get(Calendar.DAY_OF_MONTH) == date))
+            if((holidays.get(i).get(Calendar.MONTH)+1 == mm) &&
+                (holidays.get(i).get(Calendar.DAY_OF_MONTH) == dd))
                 holidays.remove(i);
         }
         System.out.println("**********************************************");
-        System.out.println("Holiday on " + month + "/" + date + " removed!");
+        System.out.println("Holiday on " + mm + "/" + dd + " removed!");
     }
 
     /* Checks whether given date(mm/dd) is a holiday/vacation with NO meetings */
@@ -61,12 +74,13 @@ public class ScheduleImp implements MeetingSchedule {
     /* PRINTS, and RETURNS list of meeting dates */
     public ArrayList<Date> getMeetingDates() {
         Calendar cal = Calendar.getInstance();
-        Date date = cal.getTime();
         Locale locale = Locale.getDefault();
+        String pattern = "MM/dd/yy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
         // int startMth = cal.get(Calendar.MONTH);        /* Calculate starting today */
         // int startDay = cal.get(Calendar.DAY_OF_MONTH); /* Calculate starting this month */
-        int year = 2019;    /* CHOOSE the YEAR */
+        int yy = 2019;    /* CHOOSE the YEAR */
         int startMth = 0;   /* CHOOSE the MONTH */
         int startDay = 1;   /* CHOOSE the DAY */
         int lastMonth = cal.getMaximum(Calendar.MONTH); // last mth in yr = 11 (0,...,11)
@@ -78,7 +92,7 @@ public class ScheduleImp implements MeetingSchedule {
 
         /* Prints meeting dates for each month of the year */
         for (int m = startMth; m <= lastMonth; m++) {
-            cal.set(year,m,startDay);
+            cal.set(yy,m,startDay);
             lastDayOfMth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
             System.out.println(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, locale) + ":");
             /* Print meeting dates for the month */
@@ -86,9 +100,8 @@ public class ScheduleImp implements MeetingSchedule {
                 cal.set(Calendar.DAY_OF_MONTH, dd);
                 dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
                 if (daysOfMeeting.contains(dayOfWeek) && !isHoliday(m,dd)) {
-                    System.out.println((m+1) + "/" + dd);
-                    date = cal.getTime();
-                    meetings.add(date);
+                    System.out.println(simpleDateFormat.format(cal.getTime()));
+                    meetings.add(cal.getTime());
                     totNumWed++;
                     //dd += 6; /* Uncomment if only 1 meeting per wk */
                 }
