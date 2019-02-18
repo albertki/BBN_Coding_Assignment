@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ScheduleImp implements MeetingSchedule {
-    ArrayList<Integer> dayOfMeeting = new ArrayList<>();
+    ArrayList<Integer> daysOfMeeting = new ArrayList<>();
     ArrayList<Calendar> holidays = new ArrayList<>();
     ArrayList<Date> meetings = new ArrayList<>();
 
@@ -23,9 +23,31 @@ public class ScheduleImp implements MeetingSchedule {
         Calendar holidayCal = Calendar.getInstance();
         holidayCal.set(year, month-1, date);
         holidays.add(holidayCal);
+        System.out.println("**********************************************");
         System.out.println("Holiday set for: " + month + "/" + date);
     }
+    /* Removes scheduled holiday */
+    public void removeHoliday(int year, int month, int date) {
+        for (int i = 0; i < holidays.size(); i++) {
+            if((holidays.get(i).get(Calendar.MONTH)+1 == month) &&
+                (holidays.get(i).get(Calendar.DAY_OF_MONTH) == date))
+                holidays.remove(i);
+        }
+        System.out.println("**********************************************");
+        System.out.println("Holiday on " + month + "/" + date + " removed!");
+    }
 
+    /* Checks whether given date(mm/dd) is a holiday/vacation with NO meetings */
+    private boolean isHoliday(int mm, int dd) {
+        for (int i = 0; i < holidays.size(); i++) {
+            if(mm == holidays.get(i).get(Calendar.MONTH)
+              && dd == holidays.get(i).get(Calendar.DAY_OF_MONTH)) {
+                  System.out.println("No meeting on: " + (mm+1) + "/" + dd);
+                  return true;
+            }
+        }
+        return false;
+    }
     /* PRINTS, and RETURNS list of holiday dates */
     public ArrayList<Calendar> printHolidays() {
         System.out.println("**********************************************");
@@ -52,7 +74,7 @@ public class ScheduleImp implements MeetingSchedule {
         int totNumWed = 0;
         int dayOfWeek;
         System.out.println("**********************************************");
-        System.out.println("Meeting Dates: \n");
+        System.out.println("Meeting Dates:");
 
         /* Prints meeting dates for each month of the year */
         for (int m = startMth; m <= lastMonth; m++) {
@@ -63,7 +85,7 @@ public class ScheduleImp implements MeetingSchedule {
             for (int dd = 1;  dd <= lastDayOfMth;  dd++) {
                 cal.set(Calendar.DAY_OF_MONTH, dd);
                 dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-                if (dayOfMeeting.contains(dayOfWeek) && !isHoliday(m,dd)) {
+                if (daysOfMeeting.contains(dayOfWeek) && !isHoliday(m,dd)) {
                     System.out.println((m+1) + "/" + dd);
                     date = cal.getTime();
                     meetings.add(date);
@@ -80,24 +102,21 @@ public class ScheduleImp implements MeetingSchedule {
 
     /* Schedules the day(s) of the week for meetings */
     public void scheduleMeetingDay(int dayOfWeek) {
-        dayOfMeeting.add(dayOfWeek);
+        daysOfMeeting.add(dayOfWeek);
         System.out.println("**********************************************");
         System.out.print("Scheduled Meeting Day(s):");
-        for (int i : dayOfMeeting) {
+        for (int i : daysOfMeeting) {
             System.out.print(" " + daysOfWeek[i-1]);
         }
         System.out.println();
     }
 
-    /* Checks whether given date(mm/dd) is a holiday/vacation with NO meetings */
-    private boolean isHoliday(int mm, int dd) {
-        for (int i = 0; i < holidays.size(); i++) {
-            if(mm == holidays.get(i).get(Calendar.MONTH)
-              && dd == holidays.get(i).get(Calendar.DAY_OF_MONTH)) {
-                  System.out.println("No meeting on: " + (mm+1) + "/" + dd);
-                  return true;
-            }
-        }
-        return false;
+    /* Removes scheduled meeting day */
+    public void removeMeetingDay(int dayToRemove) {
+        int index = daysOfMeeting.indexOf(dayToRemove);
+        daysOfMeeting.remove(index);
+        System.out.println("**********************************************");
+        System.out.println("Meeting Day on " + daysOfWeek[dayToRemove-1] + " removed!");
     }
+
 }

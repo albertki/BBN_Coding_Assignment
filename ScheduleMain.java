@@ -14,11 +14,15 @@ class ScheduleMain {
         while (stop != 0) {
             schedule.scheduleMeetingDay(stop);
             stop = in.nextInt();
-
         }
         schedule.addHoliday(2019, 1, 2);
         schedule.addHoliday(2019, 6, 26);
         schedule.printHolidays();
         ArrayList<Date>  arr = schedule.getMeetingDates();
+        schedule.removeHoliday(2019,1,2);
+        arr = schedule.getMeetingDates();
+        schedule.removeMeetingDay(4);
+        schedule.scheduleMeetingDay(3);
+        arr = schedule.getMeetingDates();
     }
 }
