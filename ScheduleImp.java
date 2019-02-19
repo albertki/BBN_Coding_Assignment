@@ -27,11 +27,13 @@ public class ScheduleImp implements MeetingSchedule {
     private int year;
     private int month;  // 0...11
     private int day;
+
     /* Default constructor */
     public ScheduleImp() {
         this.year = this.cal.get(Calendar.YEAR);
         this.month = this.cal.get(Calendar.MONTH);
         this.day = this.cal.get(Calendar.DAY_OF_MONTH);
+        System.out.println(simpleDateFormat.format(this.cal.getTime()));
     }
     /* Non-default constructor */
     public ScheduleImp(int yy, int mm, int dd) {
@@ -101,6 +103,7 @@ public class ScheduleImp implements MeetingSchedule {
             lastDayOfMth = this.cal.getActualMaximum(Calendar.DAY_OF_MONTH);
             System.out.println(this.cal.getDisplayName(Calendar.MONTH, Calendar.LONG, locale) + ":");
             /* Print meeting dates for the month */
+            // TODO: how to start from startDay, and then dd=1 for subsequent mths?
             for (int dd = 1;  dd <= lastDayOfMth;  dd++) {
                 this.cal.set(Calendar.DAY_OF_MONTH, dd);
                 dayOfWeek = this.cal.get(Calendar.DAY_OF_WEEK);
@@ -113,7 +116,7 @@ public class ScheduleImp implements MeetingSchedule {
             }
         }
         System.out.println("**********************************************");
-        System.out.println("Total Num. of Meetings in " + this.year + ": " + totNumWed);
+        System.out.println("Total Num. of Meetings: " + totNumWed);
 
         return meetings;
     }
