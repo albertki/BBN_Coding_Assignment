@@ -1,3 +1,5 @@
+/* Calendar/Scheduler Program written in Java by Albert Ki */
+
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,7 +8,7 @@ class ScheduleMain {
 
     public static void main (String[] args) {
 /* Schedule starting from custom starting month */
-        ScheduleImp schedule = new ScheduleImp(2019,1,1);
+        MeetingScheduler schedule = new MeetingScheduler(2019,1,1);
         schedule.addHoliday(2, 20);
         schedule.addHoliday(11, 20);
         schedule.addHoliday(12, 24);
@@ -21,13 +23,13 @@ class ScheduleMain {
         // System.out.println(arr.toString());
 
 /* Schedule beginning from current month */
-        // ScheduleImp schedule2 = new ScheduleImp();
+        // MeetingScheduler schedule2 = new MeetingScheduler();
         // schedule.addHoliday(11, 20);
         // schedule2.scheduleMeetingDay(4);
         // schedule2.getMeetingDates();
 
 /* Schedule by reading input from command prompt [OPTIONAL] */
-    //     ScheduleImp schedule3 = new ScheduleImp(2019,1,1);
+    //     MeetingScheduler schedule3 = new MeetingScheduler(2019,1,1);
     //     Scanner in = new Scanner(System.in);
     //     System.out.println("** Please enter the weekday digit to schedule meeting day(s) for the year:");
     //     System.out.println("[1 = Sunday, 2 = Monday, 3 = Tuesday, 4 = Wednesday, 5 = Thursday, 6 = Friday, 7 = Saturday]");
